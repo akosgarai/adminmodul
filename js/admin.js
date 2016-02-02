@@ -1,6 +1,7 @@
 angular.module('admin', []).controller('adminController', ['$scope', function ($scope) {
     $scope.existingFlags = {};
     $scope.existingInputs = [];
+    $scope.activeTab = "";
     $scope.initAdminPageMock = function () {
         $scope.existingFlags = {
             'flag1mock' : {
@@ -109,26 +110,45 @@ angular.module('admin', []).controller('adminController', ['$scope', function ($
         'color' : '0'
     };
     $scope.createNewInput = function () {
-        $scope.editedInput = {
-            'label' : '',
-            'name' : '',
-            'type' : '',
-            'parent' : [],
-            'hidden' : false,
-            'description' : '',
-            'params' : {
-            }
-        };
+        if ($scope.activeTab != 'input' && $scope.activeTab != 'flag') {
+            $scope.editedInput = {
+                'label' : '',
+                'name' : '',
+                'type' : '',
+                'parent' : [],
+                'hidden' : false,
+                'description' : '',
+                'params' : {
+                }
+            };
+            $scope.lastActiveTab = $scope.activeTab;
+            $scope.activeTab = 'input';
+        }
     };
     $scope.createNewFlag = function () {
-        $scope.editedFlag = {
-            'label' : '',
-            'name' : '',
-            'parent' : [],
-            'hidden' : false,
-            'description' : '',
-            'color' : '0'
-        };
+        if ($scope.activeTab != 'input' && $scope.activeTab != 'flag') {
+            $scope.editedFlag = {
+                'label' : '',
+                'name' : '',
+                'parent' : [],
+                'hidden' : false,
+                'description' : '',
+                'color' : '0'
+            };
+            $scope.lastActiveTab = $scope.activeTab;
+            $scope.activeTab = 'flag';
+        }
+    };
+    $scope.closeEditForm = function () {
+        $scope.activeTab = $scope.lastActiveTab;
+    };
+    $scope.listExistingFlags = function () {
+        $scope.lastActiveTab = $scope.activeTab;
+        $scope.activeTab = 'listFlag';
+    };
+    $scope.listExistingInputs = function () {
+        $scope.lastActiveTab = $scope.activeTab;
+        $scope.activeTab = 'listInput';
     };
     $scope.setEditedInputType = function (type) {
         $scope.editedInput['type'] = type;

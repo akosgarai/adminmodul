@@ -2,9 +2,29 @@
 <head>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/admin.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body>
     <div data-ng-app="admin" data-ng-controller="adminController">
+        <div class="container">
+            <ul class="nav nav-tabs">
+                <li role="presentation" data-ng-class="{'active' : activeTab == 'flag'}">
+                    <a href="#" data-ng-if="activeTab != 'input'" data-ng-click="createNewFlag();">New Flag</a>
+                </li>
+                <li role="presentation" data-ng-class="{'active' : activeTab == 'input'}">
+                    <a href="#" data-ng-if="activeTab != 'flag'" data-ng-click="createNewInput();">New Input</a>
+                </li>
+                <li role="presentation">
+                    <a href="#" data-ng-click="closeEditForm();" data-ng-if="activeTab == 'input' || activeTab == 'flag'">Close <span data-ng-bind="activeTab"></span></a>
+                </li>
+                <li role="presentation" data-ng-class="{'active' : activeTab == 'listInput'}">
+                    <a href="#" data-ng-click="listExistingInputs();" data-ng-if="activeTab != 'input' && activeTab != 'flag'">List Inputs</a>
+                </li>
+                <li role="presentation" data-ng-class="{'active' : activeTab == 'listFlag'}">
+                    <a href="#" data-ng-click="listExistingFlags();" data-ng-if="activeTab != 'input' && activeTab != 'flag'">List Flags</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>

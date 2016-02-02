@@ -276,6 +276,26 @@ describe('Admin module Unit Tests', function () {
             $scope.addParamToEditedInput({'selection-name': 'test-name-1', 'selection-label' : 'test-label-1', 'selection-description' : 'test-descriontion-1'});
             expect($scope.editedInput).toEqual(expected); 
         }); 
+        it('it checks the type related params of the flags (selected: select)', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            var expected = {
+                'label' : '',
+                'name' : '',
+                'type' : 'select',
+                'parent' : [],
+                'hidden' : false,
+                'description' : '',
+                'params' : {
+                    'selection-name' : [],
+                    'selection-label' : [],
+                    'selection-description' : []
+                }
+            };
+            $scope.createNewInput();
+            $scope.setEditedInputType('select');
+            expect($scope.editedInput).toEqual(expected); 
+        }); 
     });
     describe('TEST006 - validate new flagname', function () {
         it('it checks the validation of the flagname - client side validation with new name', function () {
@@ -289,6 +309,74 @@ describe('Admin module Unit Tests', function () {
             var controller = $controller('adminController', { '$scope' : $scope});
             $scope.initAdminPageMock();
             expect($scope.isFlagNameUsed('flag2mock')).toEqual(true); 
+        }); 
+    });
+    describe('TEST007 - navbar related tests', function () {
+        it('it checks the the active tab after clicking the New Flag button', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.createNewFlag();
+            expect($scope.activeTab).toEqual("flag"); 
+        }); 
+        it('it checks the the active tab after clicking the New Input button', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.createNewInput();
+            expect($scope.activeTab).toEqual("input"); 
+        }); 
+        it('it checks the the active tab after clicking the List Flag button', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.listExistingFlags();
+            expect($scope.activeTab).toEqual("listFlag"); 
+        }); 
+        it('it checks the the active tab after clicking the List Input button', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.listExistingInputs();
+            expect($scope.activeTab).toEqual("listInput"); 
+        }); 
+        it('it checks the the active tab after clicking the Close button (last active tab was listFlag)', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.lastActiveTab = 'listFlag';
+            $scope.closeEditForm();
+            expect($scope.activeTab).toEqual("listFlag"); 
+        }); 
+        it('it checks the the active tab after clicking the Close button (last active tab was listInput)', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.lastActiveTab = 'listInput';
+            $scope.closeEditForm();
+            expect($scope.activeTab).toEqual("listInput"); 
+        }); 
+        it('it checks the the active tab after clicking the New Input button (active tab was flag before)', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.activeTab = 'flag';
+            $scope.createNewInput();
+            expect($scope.activeTab).toEqual("flag"); 
+        }); 
+        it('it checks the the active tab after clicking the New Input button (active tab was input before)', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.activeTab = 'input';
+            $scope.createNewInput();
+            expect($scope.activeTab).toEqual("input"); 
+        }); 
+        it('it checks the the active tab after clicking the New Flag button (active tab was flag before)', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.activeTab = 'flag';
+            $scope.createNewFlag();
+            expect($scope.activeTab).toEqual("flag"); 
+        }); 
+        it('it checks the the active tab after clicking the New Flag button (active tab was input before)', function () {
+            var $scope = {};
+            var controller = $controller('adminController', { '$scope' : $scope});
+            $scope.activeTab = 'input';
+            $scope.createNewFlag();
+            expect($scope.activeTab).toEqual("input"); 
         }); 
     });
 });
