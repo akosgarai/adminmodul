@@ -124,7 +124,7 @@ describe('Admin module Unit Tests', function () {
                     'parent' : [],
                     'hidden' : false,
                     'description' : 'sample flag 2 mock stuff',
-                    'color' : '0'
+                    'color' : '1'
                 },
                 'flag3mock' : {
                     'label' : 'label-3-mock',
@@ -132,7 +132,7 @@ describe('Admin module Unit Tests', function () {
                     'parent' : ['flag2mock'],
                     'hidden' : false,
                     'description' : 'sample flag 3 mock stuff',
-                    'color' : '0'
+                    'color' : '2'
                 }
             };
             var expectedInputs = {

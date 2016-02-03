@@ -2,6 +2,7 @@ angular.module('admin', []).controller('adminController', ['$scope', function ($
     $scope.existingFlags = {};
     $scope.existingInputs = [];
     $scope.activeTab = "";
+    $scope.selectedFlagName = "";
     $scope.initAdminPageMock = function () {
         $scope.existingFlags = {
             'flag1mock' : {
@@ -18,7 +19,7 @@ angular.module('admin', []).controller('adminController', ['$scope', function ($
                 'parent' : [],
                 'hidden' : false,
                 'description' : 'sample flag 2 mock stuff',
-                'color' : '0'
+                'color' : '1'
             },
             'flag3mock' : {
                 'label' : 'label-3-mock',
@@ -26,7 +27,7 @@ angular.module('admin', []).controller('adminController', ['$scope', function ($
                 'parent' : ['flag2mock'],
                 'hidden' : false,
                 'description' : 'sample flag 3 mock stuff',
-                'color' : '0'
+                'color' : '2'
             }
         };
         $scope.existingInputs = {
@@ -91,6 +92,14 @@ angular.module('admin', []).controller('adminController', ['$scope', function ($
             }
         };
     };
+    $scope.flagMap = function (colorId) {
+        var map = {
+            '0' : 'default',
+            '1' : 'warning',
+            '2' : 'success'
+        };
+        return map[colorId];
+    }
     $scope.editedInput = {
         'label' : '',
         'name' : '',
@@ -149,6 +158,9 @@ angular.module('admin', []).controller('adminController', ['$scope', function ($
     $scope.listExistingInputs = function () {
         $scope.lastActiveTab = $scope.activeTab;
         $scope.activeTab = 'listInput';
+    };
+    $scope.setFlagDetail = function (flagName) {
+        $scope.selectedFlagName = flagName;
     };
     $scope.setEditedInputType = function (type) {
         $scope.editedInput['type'] = type;

@@ -3,10 +3,12 @@
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/admin.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div data-ng-app="admin" data-ng-controller="adminController">
-        <div class="container">
+        <div class="container" data-ng-init="initAdminPageMock()">
             <ul class="nav nav-tabs">
                 <li role="presentation" data-ng-class="{'active' : activeTab == 'flag'}">
                     <a href="#" data-ng-if="activeTab != 'input'" data-ng-click="createNewFlag();">New Flag</a>
@@ -24,6 +26,54 @@
                     <a href="#" data-ng-click="listExistingFlags();" data-ng-if="activeTab != 'input' && activeTab != 'flag'">List Flags</a>
                 </li>
             </ul>
+            <div data-ng-switch="activeTab">
+                <div data-ng-switch-when="listInput" class="panel panel-default">
+                    <div class="panel-heading">listInput</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12" data-ng-repeat="input in existingInputs" class="input-group">
+                                <div class="dropdown" data-ng-if="input.type == 'select'">
+                                    <button id="{{input.name}}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{input.label}} <span class="caret"></span></button>
+                                    <ul class="dropdown-menu" aria-labelledby="{{input.name}}">
+                                        <li><a href="#">Default</a></li>
+                                        <li data-ng-repeat="label in input.params['selection-label']"><a href="#">{{label}}</a></li>
+                                    </ul>
+                                </div><!-- /btn-group -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-switch-when="listFlag" class="panel panel-default">
+                    <div class="panel-heading">listFlag</div>
+                    <div class="panel-body">
+                        <span data-ng-repeat="flag in existingFlags" 
+                            class="label label-{{flagMap(flag.color)}}" 
+                            data-ng-click="setFlagDetail(flag.name)"
+                            data-ng-bind="flag.label"></span>
+                    </div>
+                    <div class="panel-footer" data-ng-if="selectedFlagName != ''">
+                        <label>Description: <span data-ng-bind=existingFlags[selectedFlagName]['description']></span></label><br />
+                        <label>Name: <span data-ng-bind=existingFlags[selectedFlagName]['name']></span></label><br />
+                        <label>Parentnames: <span data-ng-bind=existingFlags[selectedFlagName]['parent'].toString()></span></label><br />
+                        <label>Default hidden: <span data-ng-bind=existingFlags[selectedFlagName]['hidden']></span></label><br />
+                    </div>
+                </div>
+                <div data-ng-switch-when="input" class="panel panel-default">
+                    <div class="panel-heading">Input</div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+                <div data-ng-switch-when="flag" class="panel panel-default">
+                    <div class="panel-heading">Flag</div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+                <div data-ng-switch-default>
+                    <div class="panel-heading">Default</div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
