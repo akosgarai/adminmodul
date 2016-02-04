@@ -134,6 +134,11 @@ angular.module('admin', []).controller('adminController', ['$scope', function ($
             $scope.activeTab = 'input';
         }
     };
+    $scope.editInputForm = function (inputname){
+        $scope.editedInput = $scope.existingInputs[inputname];
+        $scope.lastActiveTab = $scope.activeTab;
+        $scope.activeTab = 'input';
+    };
     $scope.createNewFlag = function () {
         if ($scope.activeTab != 'input' && $scope.activeTab != 'flag') {
             $scope.editedFlag = {

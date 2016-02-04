@@ -32,13 +32,23 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-6 col-sm-12" data-ng-repeat="input in existingInputs" class="input-group">
-                                <div class="dropdown" data-ng-if="input.type == 'select'">
-                                    <button id="{{input.name}}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{input.label}} <span class="caret"></span></button>
-                                    <ul class="dropdown-menu" aria-labelledby="{{input.name}}">
-                                        <li><a href="#">Default</a></li>
-                                        <li data-ng-repeat="label in input.params['selection-label']"><a href="#">{{label}}</a></li>
-                                    </ul>
-                                </div><!-- /btn-group -->
+                                <div data-ng-if="input.type == 'select'">
+                                    <div class="dropdown">
+                                        <button id="{{input.name}}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{input.label}} <span class="caret"></span></button>
+                                        <ul class="dropdown-menu" aria-labelledby="{{input.name}}">
+                                            <li><a href="#">Default</a></li>
+                                            <li data-ng-repeat="label in input.params['selection-label']"><a href="#">{{label}}</a></li>
+                                        </ul>
+                                        <button type="button" class="btn bnt-default" data-ng-click="editInputForm(input.name)">Edit Input</button>
+                                    </div><!-- /btn-group -->
+                                </div>
+                                <div data-ng-if="input.type == 'text'">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" data-ng-bind="input.label" data-ng-click="editInputForm(input.name)" style="cursor: pointer;"></span>
+                                        <input type="text" class="form-control" placeholder="{{input.description}}">
+                                    </div>
+                                </div>
+                                <hr />
                             </div>
                         </div>
                     </div>
